@@ -1,27 +1,26 @@
 package predicttest.domain;
 
 import java.time.LocalDate;
-import java.util.*;
-import lombok.*;
-import predicttest.domain.*;
+import lombok.Data;
+import lombok.ToString;
 import predicttest.infra.AbstractEvent;
 
-//<<< DDD / Domain Event
 @Data
 @ToString
-public class DeathPredictedEvent extends AbstractEvent {
+public class DeathPredictionRequestedEvent extends AbstractEvent {
 
-    
-    private Date date;
+    private LocalDate date;
     private String region;
-    private Long predictedDeaths;
+    private Long previousYearDeaths; 
 
-    public DeathPredictedEvent(DeathPrediction aggregate) {
-        super(aggregate);
-    }
-
-    public DeathPredictedEvent() {
+    public DeathPredictionRequestedEvent() {
         super();
     }
+
+    public DeathPredictionRequestedEvent(LocalDate date, String region, Long previousYearDeaths) {
+        super();
+        this.date = date;
+        this.region = region;
+        this.previousYearDeaths = previousYearDeaths;
+    }
 }
-//>>> DDD / Domain Event

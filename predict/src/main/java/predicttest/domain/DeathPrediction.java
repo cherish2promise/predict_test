@@ -1,40 +1,32 @@
 package predicttest.domain;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import javax.persistence.*;
 import lombok.Data;
-import predicttest.PredictApplication;
-import predicttest.domain.DeathPredictedEvent;
 
 @Entity
 @Table(name = "DeathPrediction_table")
 @Data
-//<<< DDD / Aggregate Root
+@IdClass(DeathPredictionId.class)
 public class DeathPrediction {
 
     @Id
-    private Date date;
-    
+    private LocalDate date;
+    @Id
     private String region;
 
-    private Long predictedDeaths;
+    private Long Deaths; // <-- 필드 이름을 "Deaths"로 통일
 
-    @PostPersist
-    public void onPostPersist() {
-        DeathPredictedEvent deathPredictedEvent = new DeathPredictedEvent(this);
-        deathPredictedEvent.publishAfterCommit();
+    public DeathPrediction() {}
+
+    public DeathPrediction(LocalDate date, String region, Long Deaths) { // <-- 생성자 인자 변경
+        this.date = date;
+        this.region = region;
+        this.Deaths = Deaths; // <-- Deaths 필드 초기화
     }
 
-    public static DeathPredictionRepository repository() {
-        DeathPredictionRepository deathPredictionRepository = PredictApplication.applicationContext.getBean(
-            DeathPredictionRepository.class
-        );
-        return deathPredictionRepository;
-    }
+    // lombok.Data가 Getter/Setter를 자동으로 생성해주므로, 명시적으로 선언할 필요는 없습니다.
+    // 하지만 가독성을 위해 예시로 표기하자면:
+    // public Long getDeaths() { return Deaths; }
+    // public void setDeaths(Long deaths) { Deaths = deaths; }
 }
-//>>> DDD / Aggregate Root
