@@ -11,6 +11,7 @@ import predicttest.infra.AbstractEvent;
 @ToString
 public class DeathPredictedEvent extends AbstractEvent {
 
+    
     private Date date;
     private String region;
     private Long predictedDeaths;

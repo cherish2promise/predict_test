@@ -18,9 +18,8 @@ import predicttest.domain.DeathPredictedEvent;
 public class DeathPrediction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Date date;
-
+    
     private String region;
 
     private Long predictedDeaths;
